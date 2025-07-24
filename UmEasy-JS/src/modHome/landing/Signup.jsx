@@ -54,7 +54,7 @@ const Signup = () => {
     if (!value) return;
 
     const { status, data } = await mutateAsync({
-      path: "/auth/check-user",
+      path: "/auth/check",
       formData: { phoneNumber: value },
     });
 

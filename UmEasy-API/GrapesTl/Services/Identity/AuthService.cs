@@ -59,13 +59,14 @@ public class AuthService(UserManager<ApplicationUser> userManager, IUnitOfWork u
             var user = new ApplicationUser
             {
                 UserName = model.PhoneNumber,
-                FullName = model.FullName,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,
                 CreatedDate = DateTime.Now,
-                ImageUrl = model.ImageUrl,
-                CompanyId = model.CompanyId,
-                DepartmentId = model.DepartmentId,
-                DesignationId = model.DesignationId,
+                //ImageUrl = model.ImageUrl,
+                //CompanyId = model.CompanyId,
+                //DepartmentId = model.DepartmentId,
+                //DesignationId = model.DesignationId,
                 Role = role,
             };
 

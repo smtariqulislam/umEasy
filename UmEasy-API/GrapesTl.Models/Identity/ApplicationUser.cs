@@ -15,7 +15,8 @@ public class ApplicationUser : IdentityUser
 
     [Required]
     [MaxLength(150)]
-    public string FullName { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 
     [MaxLength(100)]
     [DefaultValue("")]
@@ -23,13 +24,8 @@ public class ApplicationUser : IdentityUser
 
     [MaxLength(50)]
     public string Role { get; set; }
+    public string NationalId { get; set; }
 
-    [MaxLength(50)]
-    public string CompanyId { get; set; }
-    [MaxLength(50)]
-    public string DepartmentId { get; set; }
-    [MaxLength(50)]
-    public string DesignationId { get; set; }
     public DateTime LastPasswordChangedDate { get; set; }
 
 }

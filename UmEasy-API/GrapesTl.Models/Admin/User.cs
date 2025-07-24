@@ -30,3 +30,11 @@ public class UserSelect
     public string Role { get; set; }
     public string FullName { get; set; }
 }
+
+
+
+public class UserPhone
+{
+    public string PhoneNumber { get; set; }
+   
+}

@@ -19,7 +19,7 @@ public class ApplicationUserRepository : RepositoryAsync<ApplicationUser>, IAppl
         var objFromDb = _db.ApplicationUser.FirstOrDefault(s => s.Id == applicationUser.Id);
         if (objFromDb != null)
         {
-            objFromDb.FullName = applicationUser.FullName;
+            objFromDb.FirstName = applicationUser.FirstName;
             objFromDb.ImageUrl = applicationUser.ImageUrl;
         }
     }

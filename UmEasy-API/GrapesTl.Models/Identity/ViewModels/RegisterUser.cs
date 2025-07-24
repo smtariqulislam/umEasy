@@ -5,19 +5,13 @@ namespace GrapesTl.Models;
 public class RegisterUser
 {
 
-    [Required]
-    public string FullName { get; set; }
-
-    [Required]
-    public string CompanyId { get; set; }
-    [Required]
-    public string DepartmentId { get; set; }
-    [Required]
-    public string DesignationId { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 
     [Required]
     [MaxLength(50)]
     public string PhoneNumber { get; set; }
+    public string NationalId { get; set; }
 
     [Required]
     [StringLength(50, MinimumLength = 8)]

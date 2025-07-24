@@ -42,7 +42,7 @@ public class UserController(IUnitOfWork unitOfWork, IAuthService authService, Us
             _userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await _unitOfWork.ApplicationUser.GetFirstOrDefaultAsync(a => a.Id == _userId);
 
-            return Ok(new { listName = user.FullName, listId = user.Id });
+            return Ok(new { listName = user.FirstName, listId = user.Id });
         }
         catch (Exception e)
         {
@@ -127,35 +127,35 @@ public class UserController(IUnitOfWork unitOfWork, IAuthService authService, Us
     }
 
 
-    [Authorize(Roles = "Grapes Admin,Super Admin")]
-    [HttpPost("create")]
-    public async Task<IActionResult> Create([FromForm] User model)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(SD.Message_Model_Error);
+    //[Authorize(Roles = "Grapes Admin,Super Admin")]
+    //[HttpPost("create")]
+    //public async Task<IActionResult> Create([FromForm] User model)
+    //{
+    //    if (!ModelState.IsValid)
+    //        return BadRequest(SD.Message_Model_Error);
 
-        var fileId = "";
-        if (model.File is not null && model.File.Length > 0)
-            fileId = await _fileUploadService.GetUploadIdAsync(model.File);
+    //    var fileId = "";
+    //    if (model.File is not null && model.File.Length > 0)
+    //        fileId = await _fileUploadService.GetUploadIdAsync(model.File);
 
-        var userModel = new RegisterUser
-        {
+    //    var userModel = new RegisterUser
+    //    {
 
-            FullName = model.FullName,
-            CompanyId = model.CompanyId,
-            DepartmentId = model.DepartmentId,
-            DesignationId = model.DesignationId,
-            PhoneNumber = model.PhoneNumber,
-            ImageUrl = fileId,
-            Password = SD.Password,
-        };
-        var result = await _authService.RegisterUserAsync(userModel, model.Role);
+    //        FirstName = model.FirstName,
+    //        //CompanyId = model.CompanyId,
+    //        //DepartmentId = model.DepartmentId,
+    //        //DesignationId = model.DesignationId,
+    //        PhoneNumber = model.PhoneNumber,
+    //        ImageUrl = fileId,
+    //        Password = SD.Password,
+    //    };
+    //    var result = await _authService.RegisterUserAsync(userModel, model.Role);
 
-        if (result.IsSuccess)
-            return Created("", SD.Message_Save);
+    //    if (result.IsSuccess)
+    //        return Created("", SD.Message_Save);
 
-        return BadRequest(SD.Message_Unsuccessful);
-    }
+    //    return BadRequest(SD.Message_Unsuccessful);
+    //}
 
 
     [Authorize(Roles = "Grapes Admin,Super Admin")]

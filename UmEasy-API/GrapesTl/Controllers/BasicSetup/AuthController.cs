@@ -1,20 +1,61 @@
-﻿using GrapesTl.Services.Identity;
+﻿using GrapesTl.Models;
+using GrapesTl.Service;
+using GrapesTl.Services.Identity;
 using System.Security.Cryptography;
 
 namespace GrapesTl.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController(IAuthService authService, IConfiguration configuration) : ControllerBase
+public class AuthController(IUnitOfWork unitOfWork,IAuthService authService, IConfiguration configuration) : ControllerBase
 {
     private readonly IAuthService _authService = authService;
     private readonly IConfiguration _configuration = configuration;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private string _userId;
 
 #if DEBUG
     int isProduction = 0;
 #else
     int isProduction = 0; // 1 
 #endif
+
+
+
+
+    [HttpPost("check")]
+    public async Task<IActionResult> Check([FromForm] UserPhone model)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(SD.Message_Model_Error);
+
+        try
+        {
+           
+            var parameter = new DynamicParameters();
+            parameter.Add("@PhoneNumber", model.PhoneNumber);
+            parameter.Add("@Message", dbType: DbType.String, size: 50, direction: ParameterDirection.Output);
+
+          
+            var userList = await _unitOfWork.SP_Call.List<RegisterUser>("adUserCheck", parameter);
+
+          
+            var message = parameter.Get<string>("@Message");
+
+            if (message == "Not found")
+                return NotFound("Phone number not found.");
+
+            
+            return Ok(userList.FirstOrDefault());
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                "Error checking phone number. " + ex.Message);
+        }
+    }
+
+
 
 
     // /api/auth/register
