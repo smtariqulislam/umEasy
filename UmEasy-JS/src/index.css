@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;1,300&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.bg-umoja-image {
+  background-image: url("/images/hero.jpg");
+  background-size: cover;
+}
+.btn-animation {
+  @apply transition hover:-translate-y-1;
+}
+
+.module-menu-item {
+  @apply hover:bg-umojayellow hover:text-white text-gray-300 flex rounded-md items-center w-full px-2 py-2 text-sm;
+}
+
+.sidebar-menu-heading {
+  @apply flex items-center w-full h-10 px-3 mt-1 rounded;
+}
+
+.sidebar-menu-item {
+  @apply flex items-center w-56 h-10 px-3 mt-1 rounded text-gray-300 hover:bg-umojayellow hover:text-white;
+}
+
+.section-title {
+  @apply bg-primary text-white rounded-md p-1 text-center;
+}
+
+.form-col {
+  @apply grid grid-cols-1 gap-4 place-items-start;
+}
+
+.form-col-2 {
+  @apply grid grid-cols-1 lg:grid-cols-2 gap-4 place-items-start;
+}
+
+.form-col-4 {
+  @apply grid grid-cols-1 lg:grid-cols-4 gap-4 place-items-start;
+}
+
+.form-row {
+  @apply grid grid-cols-1;
+}
+
+.form-control {
+  @apply w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none sm:text-sm;
+}
+
+.form-controlNoBorder {
+  @apply w-full p-2 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none sm:text-sm;
+}
+
+.input-border-primary {
+  @apply focus:ring-primary focus:border-primary;
+}
+.input-border-danger {
+  @apply focus:ring-red-400 focus:border-red-400;
+}
+
+.menu-item {
+  @apply origin-top-right absolute mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none;
+}
+
+.card {
+  @apply grid grid-cols-1 place-self-center bg-white rounded-lg shadow-sm break-words p-5 mx-auto;
+}
+
+.btn-header {
+  @apply px-0 py-0 font-semibold rounded-3xl shadow cursor-pointer transition delay-75 hover:bg-opacity-80;
+}
+
+.btn {
+  @apply p-2  font-semibold text-white flex justify-center items-center rounded-lg shadow-lg cursor-pointer transition delay-75;
+}
+
+.btn-tabs {
+  @apply p-4  font-semibold text-white flex justify-center items-center rounded-lg shadow-lg cursor-pointer transition delay-75;
+}
+
+.btn-success {
+  @apply btn bg-success hover:bg-green-700;
+}
+
+.btn-umojablue {
+  @apply btn bg-umojablue hover:bg-blue-700;
+}
+
+.btn-danger {
+  @apply btn bg-danger hover:bg-red-700;
+}
+
+.btn-umojayellow {
+  @apply btn bg-umojayellow hover:bg-umojayellowdark;
+}
+
+.btn-yam {
+  @apply btn bg-yam hover:bg-red-700;
+}
+
+.btn-dark {
+  @apply btn bg-primary hover:bg-primary;
+}
+
+.btn-gray {
+  @apply btn bg-gray-400 hover:bg-gray-700;
+}
+
+.btn-teal {
+  @apply btn bg-teal-400 hover:bg-teal-700;
+}
+
+.btn-sky {
+  @apply btn bg-sky-400 hover:bg-sky-700;
+}
+
+/* List / Table style */
+.list-wrapper {
+  @apply border-green-100 grid grid-cols-1 space-y-1 text-xs;
+}
+
+.list-header {
+  @apply hidden bg-gray-300 text-primary p-3 rounded-t-md;
+}
+
+.list-body-def {
+  @apply odd:bg-gray-100 even:bg-gray-200 hover:bg-umojablue hover:text-white;
+}
+
+.list-body {
+  @apply py-2 px-3 list-body-def;
+}
+
+.list-body-click {
+  @apply p-3 list-body-def rounded-lg;
+}
+
+.list-footer {
+  @apply bg-gray-300 text-primary rounded-b-md p-3 mt-2;
+}
+
+.editor-wrapper .ck-editor__editable_inline {
+  min-height: 100px;
+  max-height: 150px; /* Adjust as needed */
+}

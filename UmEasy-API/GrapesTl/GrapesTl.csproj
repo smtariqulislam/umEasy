@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+		<TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+		<IsPackable>false</IsPackable>
+		<SpaRoot>ClientApp\</SpaRoot>
+		<DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+		<UserSecretsId>33e9547a-7e45-4314-a827-d5ce0e721d0e</UserSecretsId>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="FluentEmail.Razor" Version="3.0.2" />
+		<PackageReference Include="FluentEmail.Smtp" Version="3.0.2" />
+		<PackageReference Include="GoogleAuthenticator" Version="3.2.0" />
+		<PackageReference Include="NReco.PdfGenerator" Version="1.2.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.4" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="8.0.4" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\GrapesTl.DataAccess\GrapesTl.DataAccess.csproj" />
+		<ProjectReference Include="..\GrapesTl.Models\GrapesTl.Models.csproj" />
+		<ProjectReference Include="..\GrapesTl.Utility\GrapesTl.Utility.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="BackgroundServices\" />
+		<Folder Include="ClientApp\" />
+		<Folder Include="Properties\PublishProfiles\" />
+	</ItemGroup>
+</Project>
