@@ -27,9 +27,9 @@ const ButtonPassword = ({ control }) => {
         )}
       />
       {passwordShown ? (
-        <AiOutlineEyeInvisible onClick={togglePassword} size={24} />
+        <AiOutlineEyeInvisible onClick={togglePassword} size={20} />
       ) : (
-        <AiOutlineEye onClick={togglePassword} size={24} />
+        <AiOutlineEye onClick={togglePassword} size={20} />
       )}
     </div>
   );

@@ -51,7 +51,7 @@
 }
 
 .form-control {
-  @apply w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none sm:text-sm;
+  @apply w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none sm:text-sm;
 }
 
 .form-controlNoBorder {
