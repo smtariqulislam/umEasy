@@ -70,20 +70,20 @@ public class UserController(IUnitOfWork unitOfWork, IAuthService authService, Us
 
 
     //[Authorize(Roles = "Grapes Admin,Super Admin")]
-    [HttpGet("select")]
-    public async Task<IActionResult> Select()
-    {
-        try
-        {
-            var data = await _unitOfWork.SP_Call.List<UserSelect>("adUserGetAll");
-            return Ok(data.Select(a => new { listId = a.Id, listName = a.FullName }));
-        }
-        catch (Exception e)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError,
-           "Error retrieve list of data." + e.Message);
-        }
-    }
+    //[HttpGet("select")]
+    //public async Task<IActionResult> Select()
+    //{
+    //    try
+    //    {
+    //        var data = await _unitOfWork.SP_Call.List<UserSelect>("adUserGetAll");
+    //        return Ok(data.Select(a => new { listId = a.Id, listName = a.FirstName }));
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        return StatusCode(StatusCodes.Status500InternalServerError,
+    //       "Error retrieve list of data." + e.Message);
+    //    }
+    //}
 
 
     [Authorize(Roles = "Grapes Admin,Super Admin")]
@@ -158,47 +158,47 @@ public class UserController(IUnitOfWork unitOfWork, IAuthService authService, Us
     //}
 
 
-    [Authorize(Roles = "Grapes Admin,Super Admin")]
-    [HttpPost("update")]
-    public async Task<IActionResult> Update([FromForm] User model)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(SD.Message_Model_Error);
+    //[Authorize(Roles = "Grapes Admin,Super Admin")]
+    //[HttpPost("update")]
+    //public async Task<IActionResult> Update([FromForm] User model)
+    //{
+    //    if (!ModelState.IsValid)
+    //        return BadRequest(SD.Message_Model_Error);
 
-        try
-        {
-            var fileId = "";
-            if (model.File is not null && model.File.Length > 0)
-                fileId = await _fileUploadService.GetUploadIdAsync(model.File);
+    //    try
+    //    {
+    //        var fileId = "";
+    //        if (model.File is not null && model.File.Length > 0)
+    //            fileId = await _fileUploadService.GetUploadIdAsync(model.File);
 
-            var parameter = new DynamicParameters();
-            parameter.Add("@Id", model.Id);
-            parameter.Add("@FullName", model.FullName);
-            parameter.Add("@CompanyId", model.CompanyId);
-            parameter.Add("@DepartmentId", model.DepartmentId);
-            parameter.Add("@DesignationId", model.DesignationId);
-            parameter.Add("@PhoneNumber", model.PhoneNumber);
-            parameter.Add("@ImageUrl", fileId);
-            parameter.Add("@Role", model.Role);
+    //        var parameter = new DynamicParameters();
+    //        parameter.Add("@Id", model.Id);
+    //        parameter.Add("@FirstName", model.FirstName);
+    //        parameter.Add("@CompanyId", model.CompanyId);
+    //        parameter.Add("@DepartmentId", model.DepartmentId);
+    //        parameter.Add("@DesignationId", model.DesignationId);
+    //        parameter.Add("@PhoneNumber", model.PhoneNumber);
+    //        parameter.Add("@ImageUrl", fileId);
+    //        parameter.Add("@Role", model.Role);
 
-            parameter.Add("@Message", "", dbType: DbType.String, direction: ParameterDirection.Output);
-            await _unitOfWork.SP_Call.Execute("adUserUpdate", parameter);
-            var message = parameter.Get<string>("Message");
+    //        parameter.Add("@Message", "", dbType: DbType.String, direction: ParameterDirection.Output);
+    //        await _unitOfWork.SP_Call.Execute("adUserUpdate", parameter);
+    //        var message = parameter.Get<string>("Message");
 
-            if (message == "Not found")
-                return NotFound(message);
+    //        if (message == "Not found")
+    //            return NotFound(message);
 
-            if (message == "Already exists")
-                return BadRequest(message);
+    //        if (message == "Already exists")
+    //            return BadRequest(message);
 
-            return NoContent();
-        }
-        catch (Exception e)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError,
-           "Error updating data." + e.Message);
-        }
-    }
+    //        return NoContent();
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        return StatusCode(StatusCodes.Status500InternalServerError,
+    //       "Error updating data." + e.Message);
+    //    }
+    //}
 
 
     [Authorize(Roles = "Grapes Admin,Super Admin")]

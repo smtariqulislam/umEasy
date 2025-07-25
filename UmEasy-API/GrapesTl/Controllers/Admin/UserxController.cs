@@ -45,7 +45,7 @@
 //        try
 //        {
 //            var data = await _unitOfWork.SP_Call.List<User>("adUserGetAll");
-//            return Ok(data.Select(a => new { listId = a.Id, listName = a.FullName }));
+//            return Ok(data.Select(a => new { listId = a.Id, listName = a.FirstName }));
 //        }
 //        catch (Exception e)
 //        {
