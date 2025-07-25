@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -6,9 +6,9 @@ import { usePostData } from "../../hooks/dataApi";
 import toast from "react-hot-toast";
 import ButtonPassword from "../../components/ButtonPassword";
 import { LuUserPlus } from "react-icons/lu";
-import useDebouncedApi from "../../hooks/useDebounceAPI";
 
 const maxDigitPhone = parseInt(import.meta.env.VITE_MAX_DIGIT_PHONE);
+const maxDigitNID = parseInt(import.meta.env.VITE_MAX_DIGIT_NID);
 
 const schema = yup.object().shape({
   phoneNumber: yup
@@ -17,7 +17,10 @@ const schema = yup.object().shape({
     .length(maxDigitPhone, `Phone number must be exactly ${maxDigitPhone} digits`),
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
-  nationalId: yup.string().required("National ID is required"),
+  nationalId: yup
+    .string()
+    .required("National ID is required")
+    .length(maxDigitNID, `National ID must be exactly ${maxDigitNID} digits`),
   password: yup
     .string()
     .min(8, "At least 8 characters")
@@ -27,6 +30,7 @@ const schema = yup.object().shape({
 const Signup = () => {
   const [submitting, setSubmitting] = useState(false);
   const [userExists, setUserExists] = useState(false);
+  const lastCheckedPhone = useRef("");
   const { mutateAsync } = usePostData();
 
   const {
@@ -50,37 +54,44 @@ const Signup = () => {
 
   const phoneNumber = watch("phoneNumber");
 
-  const { trigger } = useDebouncedApi(async (value) => {
-    if (!value) return;
+  const checkUserExists = async (phoneValue) => {
+    if (!phoneValue || phoneValue.length !== maxDigitPhone) return;
 
-    const { status, data } = await mutateAsync({
-      path: "/auth/check",
-      formData: { phoneNumber: value },
-    });
+    try {
+      const { status, data } = await mutateAsync({
+        path: "/auth/check",
+        formData: { phoneNumber: phoneValue },
+      });
 
-    if (status === 200 && data?.found) {
-      toast.success("User found, fields auto-filled");
-      setValue("firstName", data.firstName || "");
-      setValue("lastName", data.lastName || "");
-      setValue("nationalId", data.nationalId || "");
-      setUserExists(true);
-    } else {
-      setValue("firstName", "");
-      setValue("lastName", "");
-      setValue("nationalId", "");
+      if (status === 200 && data?.found) {
+        toast.success("User found, fields auto-filled");
+        setValue("firstName", data.firstName || "");
+        setValue("lastName", data.lastName || "");
+        setValue("nationalId", data.nationalId || "");
+        setUserExists(true);
+      } else {
+        setValue("firstName", "");
+        setValue("lastName", "");
+        setValue("nationalId", "");
+        setUserExists(false);
+      }
+
+      return data;
+    } catch (error) {
+      toast.error("Error checking user");
       setUserExists(false);
     }
-
-    return data;
-  });
+  };
 
   const handlePhoneChange = (e) => {
     const value = e.target.value;
     setValue("phoneNumber", value);
 
-    if (value.length === maxDigitPhone) {
-      trigger(value);
-    } else {
+    if (value.length === maxDigitPhone && value !== lastCheckedPhone.current) {
+      lastCheckedPhone.current = value;
+      checkUserExists(value);
+    } else if (value.length < maxDigitPhone) {
+      lastCheckedPhone.current = "";
       setUserExists(false);
       setValue("firstName", "");
       setValue("lastName", "");
@@ -120,7 +131,6 @@ const Signup = () => {
             placeholder="Phone number with country code"
             value={phoneNumber}
             onChange={handlePhoneChange}
-            {...register("phoneNumber")}
             autoFocus
           />
           {errors.phoneNumber && (
